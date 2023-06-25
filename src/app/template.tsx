@@ -18,6 +18,8 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import NotificationsIcon from '@mui/icons-material/Notifications'
 import {SidebarItems} from './navigationItems'
 import {FC, ReactNode, useState} from 'react'
+import Link from "next/link";
+import {Logout} from "@mui/icons-material";
 
 type TemplateProps = {
   children: ReactNode
@@ -82,7 +84,7 @@ const Template: FC<TemplateProps> = ({children}) => {
 
   return <Box sx={{display: 'flex'}}>
     <CssBaseline/>
-    <AppBar position="absolute" open={open}>
+    <AppBar position="absolute" open={open} elevation={0}>
       <Toolbar
         sx={{
           pr: '24px', // keep right padding when drawer closed
@@ -109,11 +111,11 @@ const Template: FC<TemplateProps> = ({children}) => {
         >
           Dashboard
         </Typography>
-        <IconButton color="inherit">
-          <Badge badgeContent={4} color="secondary">
-            <NotificationsIcon/>
-          </Badge>
-        </IconButton>
+        <a href="api/auth/logout">
+          <IconButton color="inherit">
+            <Logout/>
+          </IconButton>
+        </a>
       </Toolbar>
     </AppBar>
     <Drawer variant="permanent" open={open}>
