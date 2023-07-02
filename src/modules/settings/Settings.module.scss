@@ -1,0 +1,23 @@
+.table {
+  margin-top: 10px;
+
+  .td {
+    padding: 10px;
+
+    .text {
+      display: flex;
+      justify-content: center;
+    }
+  }
+
+  .saveButton {
+    margin-top: 10px;
+    float: right;
+  }
+}
+
+.title {
+  display: flex;
+  justify-content: center;
+  margin: 0px 0;
+}
