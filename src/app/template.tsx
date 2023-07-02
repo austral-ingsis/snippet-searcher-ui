@@ -111,7 +111,7 @@ const Template: FC<TemplateProps> = ({children}) => {
         >
           Dashboard
         </Typography>
-        <a href="api/auth/logout">
+         <a href="api/auth/logout">
           <IconButton color="inherit">
             <Logout/>
           </IconButton>
