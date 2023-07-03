@@ -1,6 +1,12 @@
 .table {
   margin-top: 10px;
 
+  .title {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+  }
+
   .td {
     padding: 10px;
 
@@ -11,13 +17,9 @@
   }
 
   .saveButton {
-    margin-top: 10px;
+    margin: 10px;
     float: right;
   }
 }
 
-.title {
-  display: flex;
-  justify-content: center;
-  margin: 0px 0;
-}
+

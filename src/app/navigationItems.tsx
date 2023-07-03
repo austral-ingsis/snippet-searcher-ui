@@ -16,14 +16,22 @@ export const SidebarItems: FC = () => {
               <ListItemText primary="Snippets"/>
           </ListItem>
       </Link>
-      <Link href="settings">
+      <Link href="formatter">
           <ListItem>
               <ListItemIcon>
                   <SettingsIcon/>
               </ListItemIcon>
-              <ListItemText primary="Settings"/>
+              <ListItemText primary="Formatter"/>
           </ListItem>
       </Link>
+        <Link href="linter">
+            <ListItem>
+                <ListItemIcon>
+                    <SettingsIcon/>
+                </ListItemIcon>
+                <ListItemText primary="Linter"/>
+            </ListItem>
+        </Link>
     </>
   )
 }

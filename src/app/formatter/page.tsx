@@ -1,8 +1,8 @@
 import React, {FC} from 'react'
-import {Settings} from "@/modules/settings/Settings";
+import {Formatter} from "@/modules/formatter/Formatter";
 
 const SettingsPage: FC = () => {
-    return <Settings/>
+    return <Formatter/>
 }
 
 export default SettingsPage
