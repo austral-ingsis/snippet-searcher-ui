@@ -1,4 +1,3 @@
-import {FakeSnippetStore} from '@/data/fake/fakeSnippetStore'
 import {z} from 'zod'
 
 export const ComplianceSchema = z.enum(['pending', 'failed', 'not-compliant', 'compliant'])

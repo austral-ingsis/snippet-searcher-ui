@@ -1,26 +1,9 @@
-'use client'
+import SnippetPage from "@/modules/snippets/snippetPage";
+import {INITIAL_SNIPPETS} from "@/data/fake/fakeSnippetStore";
 
-import {FC, useCallback} from 'react'
-import {Add} from '@mui/icons-material'
-import {Fab, Paper} from '@mui/material'
-import {useRouter} from 'next/navigation'
-import {SnippetTable} from './snippetTable'
-
-const SnippetsPage: FC = () => {
-  const router = useRouter()
-
-  const handleCreateClick = useCallback(() => router.push('/snippets/create'), [router])
-
-  return (
-    <>
-      <Paper variant="outlined" sx={{my: {xs: 3, md: 6}, p: {xs: 2, md: 3}}}>
-        <SnippetTable/>
-      </Paper>
-      <Fab color="primary" aria-label="add" onClick={handleCreateClick}>
-        <Add/>
-      </Fab>
-    </>
-  )
+const Snippets = async () => {
+    // const snippets = await fetcher<Snippet[]>('manager')
+    const snippets = INITIAL_SNIPPETS
+    return <SnippetPage snippets={snippets}/>
 }
-
-export default SnippetsPage
+export default Snippets;

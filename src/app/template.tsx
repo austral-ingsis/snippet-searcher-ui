@@ -11,14 +11,11 @@ import List from '@mui/material/List'
 import Typography from '@mui/material/Typography'
 import Divider from '@mui/material/Divider'
 import IconButton from '@mui/material/IconButton'
-import Badge from '@mui/material/Badge'
 import Container from '@mui/material/Container'
 import MenuIcon from '@mui/icons-material/Menu'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
-import NotificationsIcon from '@mui/icons-material/Notifications'
-import {SidebarItems} from './navigationItems'
+import {SidebarItems} from '../components/navigationItems'
 import {FC, ReactNode, useState} from 'react'
-import Link from "next/link";
 import {Logout} from "@mui/icons-material";
 
 type TemplateProps = {
@@ -146,10 +143,12 @@ const Template: FC<TemplateProps> = ({children}) => {
         flexGrow: 1,
         height: '100vh',
         overflow: 'auto',
+        display: 'flex',
+        flexDirection: 'column'
       }}
     >
       <Toolbar/>
-      <Container>
+      <Container sx={{ flexGrow: 1, padding: '16px' }}>
         {children}
       </Container>
     </Box>
