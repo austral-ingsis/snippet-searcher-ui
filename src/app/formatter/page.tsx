@@ -1,5 +1,5 @@
 import React, {FC} from 'react'
-import {Formatter} from "@/modules/formatter/Formatter";
+import {Formatter} from "@/modules/settings/Formatter";
 
 const SettingsPage: FC = () => {
     return <Formatter/>
