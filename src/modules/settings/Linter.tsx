@@ -1,3 +1,4 @@
+'use client'
 import RulesComponent from "@/modules/settings/SettingsRulesComponent";
 import {useEffect, useState} from "react";
 import {useSettingsRules} from "@/hooks/useSettingsRules";
