@@ -14,7 +14,9 @@ export const fetcher = async <T>(url: string): Promise<T> => {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${getAppSession()}`
         },
-    }).then((res) => res.json()) as T
+    }).then((res) => {
+        return res.json()
+    }) as T
 };
 
 export const puter = async <T>(url: string, body: Partial<T>): Promise<T> => {
