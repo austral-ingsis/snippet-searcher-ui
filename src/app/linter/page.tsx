@@ -1,6 +1,6 @@
 import React, {FC} from 'react'
-import {Formatter} from "@/modules/formatter/Formatter";
-import {Linter} from "@/modules/linter/Linter";
+import {Formatter} from "@/modules/settings/Formatter";
+import {Linter} from "@/modules/settings/Linter";
 
 const LintingPage: FC = () => {
     return <Linter/>

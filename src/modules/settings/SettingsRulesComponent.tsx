@@ -1,6 +1,5 @@
 'use client'
 import React, {useState} from 'react';
-import {rules} from "@/modules/formatter/Rules";
 import styles from './Settings.module.scss'
 import {
     Button,
@@ -14,27 +13,48 @@ import {
     TableRow,
     TextField
 } from "@mui/material";
-
-interface RuleValues {
-    [key: string]: string;
-}
+import {useSettingsRules} from "@/hooks/useSettingsRules";
 
 interface RulesComponent {
     title: string;
-    rules: {
-        name: string
-        key: string
-        value: string
-    }[]
+    rules: any
+    formatter?: boolean;
 }
 
-const RulesComponent = (props: RulesComponent) => {
-    const initialState = rules.reduce((state: RuleValues, rule) => ({...state, [rule.key]: rule.value}), {});
-    const [ruleValues, setRuleValues] = useState<RuleValues>(initialState);
+export interface RuleValues {
+    spaceBeforeColon: boolean;
+    spaceAfterColon: boolean;
+    spaceAroundEquals: boolean;
+    lineBeforePrint: number;
+    lineAfterSemicolon: boolean;
+    spaceBetweenTokens: boolean;
+    spaceAroundOperators: boolean;
+    indentationInsideIf: number;
+    braceOnSameLineAsIf: boolean;
+}
 
-    const handleRuleChange = (key: string, value: string) => {
-        setRuleValues({...ruleValues, [key]: value});
+const SettingsRulesComponent = (props: RulesComponent) => {
+    const [ruleValues, setRuleValues] = useState<RuleValues>(props.rules);
+
+    const handleRuleChange = (key: keyof RuleValues, value: boolean | number) => {
+        setRuleValues(prevState => ({
+            ...prevState,
+            [key]: value,
+        }));
     };
+
+    const { editRules, loading } = useSettingsRules({
+        onSuccess: (response) => {
+            console.log(response);
+        },
+        onError: (error) => {
+            console.error(error);
+        },
+    }, props.formatter ? 'formatter' : 'linting');
+
+    const handleClick = () => {
+        editRules(ruleValues);
+    }
 
     return (
         <div className={styles.table}>
@@ -52,20 +72,20 @@ const RulesComponent = (props: RulesComponent) => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {props.rules.map((rule) => (
-                            <TableRow key={rule.key}>
+                        {Object.entries(props.rules).map((rule) => (
+                            <TableRow key={rule[0]}>
                                 <TableCell className={styles.td}>
-                                    <p className={styles.text}>{rule.name}
+                                    <p className={styles.text}>{rule[0]}
                                     </p>
                                 </TableCell>
                                 <TableCell className={styles.td}>
-                                    {rule.key === 'lineBeforePrintln' ? (
+                                    {rule[0] === 'lineBeforePrint' || rule[0] === 'indentationInsideIf' ? (
                                         <div className={styles.text}>
                                             <TextField
                                                 type="number"
                                                 variant="outlined"
-                                                value={ruleValues[rule.key]}
-                                                onChange={(e) => handleRuleChange(rule.key, e.target.value)}
+                                                value={ruleValues[rule[0] as keyof RuleValues]}
+                                                onChange={(e) => handleRuleChange(rule[0] as keyof RuleValues, parseInt(e.target.value, 10))}
                                                 className={styles.input}
                                                 size="small"
                                             />
@@ -73,8 +93,8 @@ const RulesComponent = (props: RulesComponent) => {
                                     ) : (
                                         <div className={styles.text}>
                                             <Checkbox
-                                                checked={ruleValues[rule.key] === 'yes'}
-                                                onChange={(e) => handleRuleChange(rule.key, e.target.checked ? 'yes' : 'no')}
+                                                checked={ruleValues[rule[0] as keyof RuleValues] as boolean}
+                                                onChange={(e) => handleRuleChange(rule[0] as keyof RuleValues, e.target.checked)}
                                             />
                                         </div>
                                     )}
@@ -83,13 +103,11 @@ const RulesComponent = (props: RulesComponent) => {
                         ))}
                     </TableBody>
                 </Table>
-                <Button variant="contained" onClick={() => console.log('Mock Data:', ruleValues)}
+                <Button variant="contained" onClick={handleClick}
                         className={styles.saveButton}>Save Changes</Button>
             </TableContainer>
-
-
         </div>
     );
 };
 
-export default RulesComponent;
+export default SettingsRulesComponent;
