@@ -1,0 +1,37 @@
+name: Docker Release (CD)
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Common SnippetSearcher Actions
+        uses: Snippet-Searcher/actions@main
+        with:
+          context: .
+          name: ${{ github.repository }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+#  deploy:
+#    name: Deploy to Prod
+#    needs: build-and-publish
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Checkout repository
+#        uses: actions/checkout@v3
+#
+#      - name: Use Azure VM Connection Action
+#        uses: Snippet-Searcher/actions@deploy
+#        with:
+#          action-file: deploy.yml
+#          ip: ${{ secrets.VM_IP }}
+#          key: ${{ secrets.SSH_PRIVATE_KEY }}
