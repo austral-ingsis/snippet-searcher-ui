@@ -21,7 +21,7 @@ const commonHeader = {
 
 export const GET = async(req: NextRequest, res: NextResponse) => {
     const {accessToken, requestUrl} = await getRequestData(req, res);
-    return fetch(`${process.env.API_ENDPOINT}/${requestUrl}`, {
+    return fetch(`${process.env.AUTH0_BASE_URL}/${requestUrl}`, {
         mode: "cors",
         headers: {
             ...commonHeader,
@@ -32,7 +32,7 @@ export const GET = async(req: NextRequest, res: NextResponse) => {
 
 export const POST = async(req: NextRequest, res: NextResponse) => {
     const {accessToken, requestUrl} = await getRequestData(req, res);
-    return fetch(`${process.env.API_ENDPOINT}/${requestUrl}`, {
+    return fetch(`${process.env.AUTH0_BASE_URL}/${requestUrl}`, {
         method: 'POST',
         mode: "cors",
         headers: {
@@ -45,7 +45,7 @@ export const POST = async(req: NextRequest, res: NextResponse) => {
 
 export const PUT = async(req: NextRequest, res: NextResponse) => {
     const {accessToken, requestUrl} = await getRequestData(req, res);
-    return fetch(`${process.env.API_ENDPOINT}/${requestUrl}`, {
+    return fetch(`${process.env.AUTH0_BASE_URL}/${requestUrl}`, {
         method: 'PUT',
         mode: "cors",
         headers: {

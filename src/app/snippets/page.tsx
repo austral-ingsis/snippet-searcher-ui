@@ -1,9 +1,9 @@
 import SnippetPage from "@/modules/snippets/snippetPage";
-import {INITIAL_SNIPPETS} from "@/data/fake/fakeSnippetStore";
+import {Snippet} from "@/data/snippet";
+import {fetcher} from "@/data/fetcher";
 
 const Snippets = async () => {
-    // const snippets = await fetcher<Snippet[]>('manager/')
-    const snippets = INITIAL_SNIPPETS
+    const snippets = await fetcher<Snippet[]>('manager')
     return <SnippetPage snippets={snippets}/>
 }
 export default Snippets;

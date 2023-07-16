@@ -1,4 +1,4 @@
-const baseUrl = 'http://localhost:3000' //Change on prod
+const baseUrl = process.env.AUTH0_BASE_URL //Change on prod
 export const fetcher = async <T>(url: string): Promise<T> => {
     return await fetch(`${baseUrl}/api/${url}`).then((res) => {
         return res.json()
