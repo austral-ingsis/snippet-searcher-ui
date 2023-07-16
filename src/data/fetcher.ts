@@ -1,46 +1,20 @@
-import {headers} from "next/headers";
-
-const getAppSession = (): string => {
-    const headerList = headers()
-    const cookie = headerList.get("cookie")
-    return Object.fromEntries(cookie?.split("; ").map(v => v.split("=")) ?? [["appSession", '']])["appSession"]
-}
+const baseUrl = 'http://localhost:3000' //Change on prod
 export const fetcher = async <T>(url: string): Promise<T> => {
-    return await fetch(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/${url}`, {
-        mode: "cors",
-        headers: {
-            Accept: "application/json; charset=utf-8",
-            "Access-Control-Allow-Origin": "*",
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${getAppSession()}`
-        },
-    }).then((res) => {
+    return await fetch(`${baseUrl}/api/${url}`).then((res) => {
         return res.json()
     }) as T
 };
 
 export const puter = async <T>(url: string, body: Partial<T>): Promise<T> => {
-    return await fetch(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/${url}`, {
-        mode: "cors",
+    return await fetch(`${baseUrl}/api/${url}`, {
         method: 'PUT',
-        headers: {
-            Accept: "application/json; charset=utf-8",
-            "Access-Control-Allow-Origin": "*",
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${getAppSession()}`
-        },
+        body: JSON.stringify(body)
     }).then((res) => res.json()) as T
 }
 
 export const poster = async <T>(url: string, body: Partial<T>): Promise<T> => {
-    return await fetch(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/${url}`, {
-        mode: "cors",
+    return await fetch(`${baseUrl}/api/${url}`, {
         method: 'POST',
-        headers: {
-            Accept: "application/json; charset=utf-8",
-            "Access-Control-Allow-Origin": "*",
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${getAppSession()}`
-        },
+        body: JSON.stringify(body)
     }).then((res) => res.json()) as T
 }
