@@ -3,13 +3,20 @@
 import {Box, Button, Grid, Paper, TextField, Typography} from '@mui/material'
 import CodeMirror from '@uiw/react-codemirror'
 import {javascript} from '@codemirror/lang-javascript'
-import {BugReport, PlayArrow, Send} from "@mui/icons-material";
+import {BugReport, Download, PlayArrow, Send} from "@mui/icons-material";
 import Link from "next/link";
 import EditIcon from "@mui/icons-material/Edit";
 import {Snippet} from "@/data/snippet";
 import IconButton from "@mui/material/IconButton";
+import {saveAs} from 'file-saver';
 
 const ViewSnippetPage = ({snippet}: {snippet: Snippet}) => {
+
+    const downloadSnippet = () => {
+        const blob = new Blob([snippet.content], { type: 'text/plain;charset=utf-8' });
+        saveAs(blob, `${snippet.name}.psc`);
+    }
+
     return (
         <Paper variant="outlined" sx={{my: {xs: 3, md: 6}, p: {xs: 2, md: 3}}}>
             <Box display="flex" flexDirection="row" justifyContent="space-between" alignItems="center">
@@ -52,6 +59,10 @@ const ViewSnippetPage = ({snippet}: {snippet: Snippet}) => {
                     </Grid>
                     <Grid item xs={12}>
                         <Box sx={{display: 'flex', justifyContent: 'flex-end'}}>
+                            <Button variant="contained" sx={{mt: 3, ml: 1, boxShadow: 0}} onClick={downloadSnippet}>
+                                <Download/>
+                                Download
+                            </Button>
                             <Link href="snippets">
                                 <Button variant="contained" sx={{mt: 3, ml: 1, boxShadow: 0}}>
                                     <PlayArrow/>
