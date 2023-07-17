@@ -1,7 +1,6 @@
-import {getAccessToken, getSession} from "@auth0/nextjs-auth0";
-import {cookies, headers} from "next/headers";
+import {getAccessToken} from "@auth0/nextjs-auth0";
 
-const baseUrl = 'https://dev.printscript.shop'// process.env.AUTH0_BASE_URL //Change on prod
+const baseUrl = process.env.NEXT_PUBLIC_API_ENDPOINT //Change on prod
 
 const commonHeader = {
     Accept: "application/json; charset=utf-8",
