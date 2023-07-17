@@ -15,17 +15,17 @@ export const SnippetRow = ({snippet}: { snippet: Snippet }) => {
             <TableCell>{snippet.type}</TableCell>
             <TableCell>{snippet.compliance}</TableCell>
             <TableCell>
-                <Link href={`snippets/view/${snippet.id}`}>
+                <Link href={`/snippets/view/${snippet.id}`}>
                     <IconButton title='View snippet'>
                         <ViewIcon/>
                     </IconButton>
                 </Link>
-                <Link href={`snippets/edit/${snippet.id}`}>
+                <Link href={`/snippets/edit/${snippet.id}`}>
                     <IconButton title='Edit snippet'>
                         <EditIcon/>
                     </IconButton>
                 </Link>
-                <Link href={`snippets/test/${snippet.id}`}>
+                <Link href={`/snippets/test/${snippet.id}`}>
                     <IconButton title='Test snippet'>
                         <BugReport/>
                     </IconButton>

@@ -24,7 +24,7 @@ const ViewSnippetPage = ({snippet}: {snippet: Snippet}) => {
                 <Typography component="h1" variant="h4" align="center" sx={{flex: 1}}>
                     {snippet?.name}
                 </Typography>
-                <Link href={`snippets/edit/${snippet?.id}`} style={{flex: 1}}>
+                <Link href={`/snippets/edit/${snippet?.id}`} style={{flex: 1}}>
                     <Button variant="contained" disableRipple sx={{boxShadow: 0}}>
                         <EditIcon/>
                         Edit

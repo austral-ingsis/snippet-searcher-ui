@@ -4,13 +4,20 @@ import {Controller, FormContainer} from 'react-hook-form-mui'
 import {Snippet, UpdateSnippetSchema} from '@/data/snippet'
 import {javascript} from '@codemirror/lang-javascript'
 import CodeMirror from '@uiw/react-codemirror'
+import {usePathname, useRouter, useSearchParams} from "next/navigation";
+import {puter} from "@/data/fetcher";
+import {useAccessToken} from "@/components/globalContext";
 
 export const EditSnippetForm = ({snippet}: { snippet: Snippet }) => {
-    const onUpdate = () => {
-        return;
+    const router = useRouter();
+    const accessToken = useAccessToken();
+    const id = usePathname().split('/').pop();
+    const onUpdate = async (snippet: any) => {
+        const res = await puter(`manager/edit/${id}`, {content: snippet.content}, accessToken)
+        console.log('res', res)
     }
     const onCancel = () => {
-        return;
+        router.push('/snippets')
     }
 
     return (
