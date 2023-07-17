@@ -2,13 +2,13 @@ import {FC} from 'react'
 import Link from 'next/link'
 
 import DashboardIcon from '@mui/icons-material/Dashboard'
-import SettingsIcon from '@mui/icons-material/Settings'
 import {ListItem, ListItemIcon, ListItemText} from "@mui/material";
+import {BugReport, FormatAlignJustify} from "@mui/icons-material";
 
 export const SidebarItems: FC = () => {
   return (
     <>
-      <Link href="snippets">
+      <Link href="/snippets">
           <ListItem>
               <ListItemIcon>
                   <DashboardIcon/>
@@ -16,18 +16,18 @@ export const SidebarItems: FC = () => {
               <ListItemText primary="Snippets"/>
           </ListItem>
       </Link>
-      <Link href="formatter">
+      <Link href="/formatter">
           <ListItem>
               <ListItemIcon>
-                  <SettingsIcon/>
+                  <FormatAlignJustify />
               </ListItemIcon>
               <ListItemText primary="Formatter"/>
           </ListItem>
       </Link>
-        <Link href="linter">
+        <Link href="/linter">
             <ListItem>
                 <ListItemIcon>
-                    <SettingsIcon/>
+                    <BugReport />
                 </ListItemIcon>
                 <ListItemText primary="Linter"/>
             </ListItem>

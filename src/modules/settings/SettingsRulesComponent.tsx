@@ -3,8 +3,8 @@ import React, {useState} from 'react';
 import styles from './Settings.module.scss'
 import {
     Button,
-    Checkbox,
-    Paper,
+    Checkbox, FormControlLabel,
+    Paper, Radio, RadioGroup,
     Table,
     TableBody,
     TableCell,
@@ -13,7 +13,8 @@ import {
     TableRow,
     TextField
 } from "@mui/material";
-import {useSettingsRules} from "@/hooks/useSettingsRules";
+import {puter} from "@/data/fetcher";
+import Typography from "@mui/material/Typography";
 
 interface RulesComponent {
     title: string;
@@ -25,41 +26,34 @@ export interface RuleValues {
     spaceBeforeColon: boolean;
     spaceAfterColon: boolean;
     spaceAroundEquals: boolean;
-    lineBeforePrint: number;
-    lineAfterSemicolon: boolean;
-    spaceBetweenTokens: boolean;
-    spaceAroundOperators: boolean;
-    indentationInsideIf: number;
-    braceOnSameLineAsIf: boolean;
+    newLineBeforePrintln: number;
+    indentSize: number;
+    caseType: "CAMEL_CASE" | "SNAKE_CASE";
+    limitPrint: boolean;
+    limitRead: boolean;
 }
 
 const SettingsRulesComponent = (props: RulesComponent) => {
     const [ruleValues, setRuleValues] = useState<RuleValues>(props.rules);
 
-    const handleRuleChange = (key: keyof RuleValues, value: boolean | number) => {
+    const handleRuleChange = (key: keyof RuleValues, value: boolean | number | string) => {
         setRuleValues(prevState => ({
             ...prevState,
             [key]: value,
         }));
     };
 
-    const { editRules, loading } = useSettingsRules({
-        onSuccess: (response) => {
-            console.log(response);
-        },
-        onError: (error) => {
-            console.error(error);
-        },
-    }, props.formatter ? 'formatter' : 'linting');
-
-    const handleClick = () => {
-        editRules(ruleValues);
+    const handleClick = async () => {
+        const res = await puter<RuleValues>(props.formatter ? `manager/formatting` : 'manager/linting', ruleValues).then(res => console.log('ok'))
+        console.log('res', res)
     }
 
     return (
         <div className={styles.table}>
             <TableContainer component={Paper}>
-                <h3 className={styles.title}>{props.title}</h3>
+                <Typography component="h2" variant="h6" color="primary" gutterBottom>
+                    {props.title}
+                </Typography>
                 <Table>
                     <TableHead>
                         <TableRow>
@@ -72,36 +66,62 @@ const SettingsRulesComponent = (props: RulesComponent) => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {Object.entries(props.rules).map((rule) => (
-                            <TableRow key={rule[0]}>
-                                <TableCell className={styles.td}>
-                                    <p className={styles.text}>{rule[0]}
-                                    </p>
-                                </TableCell>
-                                <TableCell className={styles.td}>
-                                    {rule[0] === 'lineBeforePrint' || rule[0] === 'indentationInsideIf' ? (
-                                        <div className={styles.text}>
-                                            <TextField
-                                                type="number"
-                                                variant="outlined"
-                                                value={ruleValues[rule[0] as keyof RuleValues]}
-                                                onChange={(e) => handleRuleChange(rule[0] as keyof RuleValues, parseInt(e.target.value, 10))}
-                                                className={styles.input}
-                                                size="small"
-                                            />
-                                        </div>
-                                    ) : (
-                                        <div className={styles.text}>
-                                            <Checkbox
-                                                checked={ruleValues[rule[0] as keyof RuleValues] as boolean}
-                                                onChange={(e) => handleRuleChange(rule[0] as keyof RuleValues, e.target.checked)}
-                                            />
-                                        </div>
-                                    )}
-                                </TableCell>
-                            </TableRow>
-                        ))}
+                        {Object.entries(ruleValues).map(([key, value]) => {
+                            if (['userId', 'id', 'created_at', 'author'].includes(key)) {
+                                return null;
+                            }
+                            return (
+                                <TableRow key={key}>
+                                    <TableCell className={styles.td}>
+                                        <p className={styles.text}>{key}</p>
+                                    </TableCell>
+                                    <TableCell className={styles.td} style={{
+                                        display: 'flex',
+                                        justifyContent: 'center'
+                                    }}>
+                                        {key === 'caseType' ? (
+                                            <RadioGroup
+                                                row
+                                                value={value as 'CAMEL_CASE' | 'SNAKE_CASE'}
+                                                onChange={(e) => handleRuleChange(key as keyof RuleValues, e.target.value as 'CAMEL_CASE' | 'SNAKE_CASE')}
+                                            >
+
+                                                <FormControlLabel
+                                                    value="CAMEL_CASE"
+                                                    control={<Radio color="primary"/>}
+                                                    label="Camel Case"
+                                                />
+                                                <FormControlLabel
+                                                    value="SNAKE_CASE"
+                                                    control={<Radio color="primary"/>}
+                                                    label="Snake Case"
+                                                />
+                                            </RadioGroup>
+                                        ) : typeof value === 'number' ? (
+                                            <div className={styles.text}>
+                                                <TextField
+                                                    type="number"
+                                                    variant="outlined"
+                                                    value={value}
+                                                    onChange={(e) => handleRuleChange(key as keyof RuleValues, parseInt(e.target.value, 10))}
+                                                    className={styles.input}
+                                                    size="small"
+                                                />
+                                            </div>
+                                        ) : (
+                                            <div className={styles.text}>
+                                                <Checkbox
+                                                    checked={value as boolean}
+                                                    onChange={(e) => handleRuleChange(key as keyof RuleValues, e.target.checked)}
+                                                />
+                                            </div>
+                                        )}
+                                    </TableCell>
+                                </TableRow>
+                            );
+                        })}
                     </TableBody>
+
                 </Table>
                 <Button variant="contained" onClick={handleClick}
                         className={styles.saveButton}>Save Changes</Button>

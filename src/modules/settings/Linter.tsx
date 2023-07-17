@@ -1,22 +1,9 @@
 'use client'
 import RulesComponent from "@/modules/settings/SettingsRulesComponent";
-import {useEffect, useState} from "react";
-import {useSettingsRules} from "@/hooks/useSettingsRules";
 
 
-export const Linter = () => {
-    const [rules, setRules] = useState({});
-    const {getAllRules, loading} = useSettingsRules({
-        onSuccess: (response) => {
-            setRules(response.data)
-        },
-        onError: (error) => {
-            console.error(error);
-        },
-    }, 'linting');
-    useEffect(() => {
-        getAllRules();
-    }, []);
+export const Linter = ({rules}: { rules: any }) => {
+
     return (
         <>
             <RulesComponent title='Linting Rules' rules={rules} formatter={false}/>
