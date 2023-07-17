@@ -1,4 +1,4 @@
-import {getAccessToken} from "@auth0/nextjs-auth0";
+import {getAccessToken, getSession} from "@auth0/nextjs-auth0";
 import {cookies, headers} from "next/headers";
 
 const baseUrl = 'https://dev.printscript.shop'// process.env.AUTH0_BASE_URL //Change on prod
@@ -24,7 +24,7 @@ export const fetcher = async <T>(url: string): Promise<T> => {
 
 export const puter = async <T>(url: string, body: Partial<T>): Promise<T> => {
     const {accessToken} = await getAccessToken();
-    return await fetch(`${baseUrl}/api/${url}`, {
+    return await fetch(`${baseUrl}/${url}`, {
         mode: "cors",
         headers: {
             ...commonHeader,
@@ -35,9 +35,8 @@ export const puter = async <T>(url: string, body: Partial<T>): Promise<T> => {
     }).then((res) => res.json()) as T
 }
 
-export const poster = async <T>(url: string, body: Partial<T>): Promise<T> => {
-    const {accessToken} = await getAccessToken();
-    return await fetch(`${baseUrl}/api/${url}`, {
+export const poster = async <T>(url: string, body: Partial<T>, accessToken: string): Promise<T> => {
+    return await fetch(`${baseUrl}/${url}`, {
         mode: "cors",
         headers: {
             ...commonHeader,

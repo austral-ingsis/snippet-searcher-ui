@@ -1,9 +1,10 @@
 "use client"
 import {createTheme, ThemeProvider} from '@mui/material/styles'
-import {ReactNode} from "react";
+import {createContext, ReactNode, useContext} from "react";
 
 type GlobalContextType = {
-    children: ReactNode
+    children: ReactNode,
+    accessToken: string,
 }
 
 const defaultTheme = createTheme({
@@ -15,11 +16,19 @@ const defaultTheme = createTheme({
     }
 })
 
-export const GlobalContext = ({children}: GlobalContextType) => {
+const AccessToken = createContext<string>("");
+
+export const GlobalContext = ({children, accessToken}: GlobalContextType) => {
     return (
         <ThemeProvider theme={defaultTheme}>
-            {children}
+            <AccessToken.Provider value={accessToken }>
+                {children}
+            </AccessToken.Provider>
         </ThemeProvider>
 
     )
+}
+
+export const useAccessToken = (): string => {
+    return useContext(AccessToken);
 }

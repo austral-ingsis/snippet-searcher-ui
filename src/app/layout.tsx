@@ -2,6 +2,8 @@ import '@/components/globals.css'
 import {Inter} from 'next/font/google'
 import {ReactNode} from 'react'
 import {GlobalContext} from "@/components/globalContext";
+import {UserProvider} from "@auth0/nextjs-auth0/client";
+import {getAccessToken} from "@auth0/nextjs-auth0";
 
 const inter = Inter({subsets: ['latin']})
 
@@ -14,12 +16,15 @@ type RootLayoutProps = {
     children: ReactNode
 }
 
-export default function RootLayout({children}: RootLayoutProps) {
+export default async function RootLayout({children}: RootLayoutProps) {
+    const {accessToken} = await getAccessToken();
     return (
         <html lang="en">
         <body className={inter.className}>
-        <GlobalContext>
-            {children}
+        <GlobalContext accessToken={accessToken ?? ""}>
+            <UserProvider>
+                {children}
+            </UserProvider>
         </GlobalContext>
         </body>
         </html>

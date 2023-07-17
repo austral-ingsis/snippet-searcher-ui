@@ -1,24 +1,32 @@
+"use client"
 import {CreateSnippetSchema, Snippet, SnippetType} from '@/data/snippet'
 import {zodResolver} from '@hookform/resolvers/zod'
-import {Box, Button, Grid, MenuItem} from '@mui/material'
+import {Box, Button, Grid} from '@mui/material'
 import {FormContainer, SelectElement, TextFieldElement} from 'react-hook-form-mui'
 import {SnippetFileField} from '@/modules/snippets/create/snippetFileField'
 import {poster} from "@/data/fetcher";
+import {useRouter} from "next/navigation";
+import {getAccessToken} from "@auth0/nextjs-auth0";
+import {useAccessToken} from "@/components/globalContext";
 
 const TYPE_OPTIONS = [
     {
         id: 'PRINTSCRIPT' as SnippetType,
-        label: 'PrintScript',
+        label: 'Printscript',
     }
 ]
 
 
 export const CreateSnippetForm = () => {
+
+    const router = useRouter();
+    const accessToken = useAccessToken();
     const onCreate = async(body: Partial<Snippet>) => {
-        await poster<Snippet>('manager/create', body);
+        await poster<Snippet>('manager/create', body, accessToken);
+        router.push('/snippets')
     }
-    const onCancel = () => {
-        return;
+    const onCancel = async() => {
+        await router.push('/snippets')
     }
 
     return (
@@ -37,7 +45,6 @@ export const CreateSnippetForm = () => {
                         name="name"
                         label="Name"
                         variant="outlined"
-                        autoComplete="snippet-name"
                     />
                 </Grid>
                 <Grid item xs={4}>
@@ -49,9 +56,7 @@ export const CreateSnippetForm = () => {
                         defaultValue="printscript"
                         variant="outlined"
                         options={TYPE_OPTIONS}
-                    >
-                        <MenuItem value="printscript">PrintScript</MenuItem>
-                    </SelectElement>
+                    />
                 </Grid>
                 <Grid item xs={12}>
                     <SnippetFileField/>
@@ -63,7 +68,7 @@ export const CreateSnippetForm = () => {
                 </Button>
                 <Button
                     variant="contained"
-                    sx={{mt: 3, ml: 1}}
+                    sx={{mt: 3, ml: 1, boxShadow: 0}}
                     type="submit"
                 >
                     Create
