@@ -1,20 +1,21 @@
-import { CreateSnippetSchema, SnippetType} from '@/data/snippet'
+import {CreateSnippetSchema, Snippet, SnippetType} from '@/data/snippet'
 import {zodResolver} from '@hookform/resolvers/zod'
 import {Box, Button, Grid, MenuItem} from '@mui/material'
 import {FormContainer, SelectElement, TextFieldElement} from 'react-hook-form-mui'
 import {SnippetFileField} from '@/modules/snippets/create/snippetFileField'
+import {poster} from "@/data/fetcher";
 
 const TYPE_OPTIONS = [
     {
-        id: 'printscript' as SnippetType,
+        id: 'PRINTSCRIPT' as SnippetType,
         label: 'PrintScript',
     }
 ]
 
 
 export const CreateSnippetForm = () => {
-    const onCreate = () => {
-        return;
+    const onCreate = async(body: Partial<Snippet>) => {
+        await poster<Snippet>('manager/create', body);
     }
     const onCancel = () => {
         return;
