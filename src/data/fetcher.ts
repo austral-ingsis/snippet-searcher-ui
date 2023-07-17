@@ -22,8 +22,7 @@ export const fetcher = async <T>(url: string): Promise<T> => {
     }).catch(e => console.log(e)) as T;
 };
 
-export const puter = async <T>(url: string, body: Partial<T>): Promise<T> => {
-    const {accessToken} = await getAccessToken();
+export const puter = async <T>(url: string, body: Partial<T>, accessToken: string): Promise<T> => {
     return await fetch(`${baseUrl}/${url}`, {
         mode: "cors",
         headers: {

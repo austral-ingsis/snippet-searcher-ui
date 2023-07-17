@@ -15,6 +15,7 @@ import {
 } from "@mui/material";
 import {puter} from "@/data/fetcher";
 import Typography from "@mui/material/Typography";
+import {useAccessToken} from "@/components/globalContext";
 
 interface RulesComponent {
     title: string;
@@ -35,6 +36,7 @@ export interface RuleValues {
 
 const SettingsRulesComponent = (props: RulesComponent) => {
     const [ruleValues, setRuleValues] = useState<RuleValues>(props.rules);
+    const accessToken = useAccessToken();
 
     const handleRuleChange = (key: keyof RuleValues, value: boolean | number | string) => {
         setRuleValues(prevState => ({
@@ -44,7 +46,7 @@ const SettingsRulesComponent = (props: RulesComponent) => {
     };
 
     const handleClick = async () => {
-        const res = await puter<RuleValues>(props.formatter ? `manager/formatting` : 'manager/linting', ruleValues).then(res => console.log('ok'))
+        const res = await puter<RuleValues>(props.formatter ? `manager/formatting` : 'manager/linting', ruleValues, accessToken).then(res => console.log('ok'))
         console.log('res', res)
     }
 
