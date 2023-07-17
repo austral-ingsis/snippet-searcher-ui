@@ -21,6 +21,7 @@ jobs:
           AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
           AUTH0_CLIENT_SECRET: ${{ secrets.AUTH0_CLIENT_SECRET }}
           API_ENDPOINT: ${{ secrets.API_ENDPOINT }}
+          NEXT_PUBLIC_API_ENDPOINT: ${{ secrets.API_ENDPOINT }}
         run: |
           cat <<EOT >> .env
           AUTH0_SECRET=${AUTH0_SECRET}
@@ -29,7 +30,8 @@ jobs:
           AUTH0_CLIENT_ID=${AUTH0_CLIENT_ID}
           AUTH0_CLIENT_SECRET=${AUTH0_CLIENT_SECRET}
           API_ENDPOINT=${API_ENDPOINT}
-          EOT
+          NEXT_PUBLIC_API_ENDPOINT=${NEXT_PUBLIC_API_ENDPOINT}
+          EOT   
           
       - name: Common SnippetSearcher Actions
         uses: Snippet-Searcher/actions@main
