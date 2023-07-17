@@ -1,4 +1,3 @@
-import {INITIAL_SNIPPETS} from "@/data/fake/fakeSnippetStore";
 import ViewSnippetPage from "@/modules/snippets/view/viewSnippet";
 import {Snippet} from "@/data/snippet";
 import {fetcher} from "@/data/fetcher";

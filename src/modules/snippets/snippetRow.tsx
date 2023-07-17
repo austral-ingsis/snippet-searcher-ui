@@ -13,7 +13,7 @@ export const SnippetRow = ({snippet}: { snippet: Snippet }) => {
         <TableRow key={snippet.id}>
             <TableCell>{snippet.name}</TableCell>
             <TableCell>{snippet.type}</TableCell>
-            <TableCell>{snippet.compliance}</TableCell>
+            <TableCell>{snippet.status}</TableCell>
             <TableCell>
                 <Link href={`/snippets/view/${snippet.id}`}>
                     <IconButton title='View snippet'>

@@ -10,7 +10,7 @@ export const SnippetDescriptorSchema = z.object({
   id: z.string(),
   name: z.string(),
   type: SnippetTypeSchema,
-  compliance: ComplianceSchema
+  status: ComplianceSchema
 })
 export type SnippetDescriptor = z.infer<typeof SnippetDescriptorSchema>
 
