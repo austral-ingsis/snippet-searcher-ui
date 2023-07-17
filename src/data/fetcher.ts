@@ -1,6 +1,6 @@
 import {getAccessToken} from "@auth0/nextjs-auth0";
 
-const baseUrl = process.env.NEXT_PUBLIC_API_ENDPOINT //Change on prod
+const baseUrl = ""//Change on prod
 
 const commonHeader = {
     Accept: "application/json; charset=utf-8",
