@@ -11,13 +11,12 @@ import List from '@mui/material/List'
 import Typography from '@mui/material/Typography'
 import Divider from '@mui/material/Divider'
 import IconButton from '@mui/material/IconButton'
-import Badge from '@mui/material/Badge'
 import Container from '@mui/material/Container'
 import MenuIcon from '@mui/icons-material/Menu'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
-import NotificationsIcon from '@mui/icons-material/Notifications'
-import {SidebarItems} from './navigationItems'
+import {SidebarItems} from '../components/navigationItems'
 import {FC, ReactNode, useState} from 'react'
+import {Logout} from "@mui/icons-material";
 
 type TemplateProps = {
   children: ReactNode
@@ -82,7 +81,7 @@ const Template: FC<TemplateProps> = ({children}) => {
 
   return <Box sx={{display: 'flex'}}>
     <CssBaseline/>
-    <AppBar position="absolute" open={open}>
+    <AppBar position="absolute" open={open} elevation={0}>
       <Toolbar
         sx={{
           pr: '24px', // keep right padding when drawer closed
@@ -109,6 +108,11 @@ const Template: FC<TemplateProps> = ({children}) => {
         >
           Dashboard
         </Typography>
+         <a href="api/auth/logout">
+          <IconButton color="inherit">
+            <Logout/>
+          </IconButton>
+        </a>
       </Toolbar>
     </AppBar>
     <Drawer variant="permanent" open={open}>
@@ -139,10 +143,12 @@ const Template: FC<TemplateProps> = ({children}) => {
         flexGrow: 1,
         height: '100vh',
         overflow: 'auto',
+        display: 'flex',
+        flexDirection: 'column'
       }}
     >
       <Toolbar/>
-      <Container>
+      <Container sx={{ flexGrow: 1, padding: '16px' }}>
         {children}
       </Container>
     </Box>
